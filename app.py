@@ -8,7 +8,9 @@ from io import BytesIO
 app = Flask(__name__)
 
 # Configure API Key
-genai.configure(api_key="AIzaSyBwI5csxrejuTiJUXSOIGrkS2VQZklf_HM")
+import os
+
+genai.configure(api_key=os.environ["GEMINI_API_KEY"])
 
 # Load Model
 model = genai.GenerativeModel("models/gemini-2.5-flash")
