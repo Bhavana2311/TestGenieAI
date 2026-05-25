@@ -16,7 +16,7 @@ print("API KEY FOUND:", bool(api_key))
 genai.configure(api_key=api_key)
 print("API KEY FOUND:", bool(os.getenv("GEMINI_API_KEY")))
 # Load Model
-model = genai.GenerativeModel("gemini-1.5-flash")
+model = genai.GenerativeModel("gemini-2.0-flash")
 
 @app.route('/', methods=['GET', 'POST'])
 def home():
