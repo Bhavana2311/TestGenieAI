@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Dashboard</title>
+
+<link rel="stylesheet"
+href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body>
+<nav class="navbar">
+
+<div class="logo">
+TestGenie AI
+</div>
+
+<div class="nav-links">
+
+<span style="color:white;">
+👋 {{ name }}
+</span>
+
+<a href="/logout">
+Logout
+</a>
+
+</div>
+
+</nav>
+<div class="dashboard">
+
+<h1>
+Welcome {{ name }} 🚀
+</h1>
+
+<p>
+AI Powered Software Testing Platform
+</p>
+
+<br>
+
+<div class="stats">
+
+<div class="stat-card">
+<h2>⚡</h2>
+<p>Generate Test Cases</p>
+</div>
+
+<div class="stat-card">
+<h2>🧠</h2>
+<p>Smart Edge Cases</p>
+</div>
+
+<div class="stat-card">
+<h2>📄</h2>
+<p>PDF Export</p>
+</div>
+
+</div>
+
+<br><br>
+
+<div class="action-buttons">
+
+<a href="/generator" class="btn">
+Generate Test Cases
+</a>
+
+<a href="/" class="btn">
+Home
+</a>
+
+<a href="/logout" class="btn">
+Logout
+</a>
+
+</div>
+
+</div>
+
+</body>
+</html>

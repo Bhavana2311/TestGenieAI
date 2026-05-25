@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Login - TestGenie AI</title>
+
+<link rel="stylesheet"
+href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body>
+
+<div class="card">
+
+<div class="form-icon">🔐</div>
+
+<h2>Welcome Back</h2>
+
+<p class="form-subtitle">
+Login to continue generating AI-powered test cases
+</p>
+
+<form method="POST">
+
+<input
+type="email"
+name="email"
+placeholder="Enter Email"
+required>
+
+<input
+type="password"
+name="password"
+placeholder="Enter Password"
+required>
+
+<button type="submit">
+Login
+</button>
+
+</form>
+
+<br>
+
+<center>
+
+<p>
+Don't have an account?
+</p>
+
+<a href="/register" class="btn">
+Register
+</a>
+
+</center>
+
+</div>
+<div class="footer">
+
+© 2026 TestGenie AI |
+AI Powered Software Testing Platform
+
+</div>
+</body>
+</html>
