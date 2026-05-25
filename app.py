@@ -13,7 +13,7 @@ import os
 genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
 
 # Load Model
-model = genai.GenerativeModel("models/gemini-2.5-flash")
+model = genai.GenerativeModel("gemini-1.5-flash")
 
 @app.route('/', methods=['GET', 'POST'])
 def home():
@@ -40,9 +40,13 @@ Format:
 - Expected Result
 """
 
-        response = model.generate_content(prompt)
+        try:
+            response = model.generate_content(prompt)
+            generated_testcases = response.text
 
-        generated_testcases = response.text
+        except Exception as e:
+            print("ERROR:", str(e))
+            generated_testcases = f"Error: {str(e)}"
 
     return render_template(
         'index.html',
