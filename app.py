@@ -4,19 +4,18 @@ from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
 from reportlab.lib.styles import getSampleStyleSheet
 import google.generativeai as genai
 from io import BytesIO
+import os
+
 
 app = Flask(__name__)
 
 # Configure API Key
-import os
 
 api_key = os.getenv("GEMINI_API_KEY")
-print("API KEY FOUND:", bool(api_key))
-
 genai.configure(api_key=api_key)
-print("API KEY FOUND:", bool(os.getenv("GEMINI_API_KEY")))
+
 # Load Model
-model = genai.GenerativeModel("gemini-2.0-flash")
+model = genai.GenerativeModel("gemini-2.5-flash")
 
 @app.route('/', methods=['GET', 'POST'])
 def home():
@@ -48,11 +47,7 @@ Format:
             generated_testcases = response.text
 
         except Exception as e:
-    import traceback
-    print("FULL ERROR:")
-    traceback.print_exc()
-
-    generated_testcases = f"Error: {str(e)}"
+            generated_testcases = f"Error: {str(e)}"
 
     return render_template(
         'index.html',
