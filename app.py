@@ -48,8 +48,11 @@ Format:
             generated_testcases = response.text
 
         except Exception as e:
-            print("ERROR:", str(e))
-            generated_testcases = f"Error: {str(e)}"
+    import traceback
+    print("FULL ERROR:")
+    traceback.print_exc()
+
+    generated_testcases = f"Error: {str(e)}"
 
     return render_template(
         'index.html',
