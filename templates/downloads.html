@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Downloads - TestGenie AI</title>
+
+<link rel="stylesheet"
+href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body>
+
+<div class="downloads-container">
+
+<h1>
+📥 Downloaded Files
+</h1>
+
+{% if files %}
+
+<div class="downloads-grid">
+
+{% for file in files %}
+
+<div class="download-card">
+
+<div class="card-top">
+
+<a href="/open_download/{{ file.filename }}"
+class="download-link">
+
+{{ file.filename }}
+
+</a>
+
+<div class="menu-container">
+
+<button class="menu-btn"
+onclick="toggleMenu('menu{{ file.id }}')">
+⋮
+</button>
+
+<div id="menu{{ file.id }}" class="dropdown-menu">
+
+<a href="/open_download/{{ file.filename }}">
+📂 Open
+</a>
+
+<a href="/share_download/{{ file.filename }}">
+📤 Share
+</a>
+
+<a href="/edit_download/{{ file.id }}">
+✏ Edit Name
+</a>
+
+<a href="#"
+onclick="openDeleteModal('{{ file.filename }}')">
+🗑 Delete
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+<p>
+File Type: {{ file.filetype }}
+</p>
+
+<p>
+Downloaded Successfully
+</p>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+{% else %}
+
+<div class="empty-downloads">
+
+<h2>
+No Downloads Yet
+</h2>
+
+<p>
+Downloaded test cases will appear here.
+</p>
+
+</div>
+
+{% endif %}
+
+<br>
+
+<a href="/dashboard" class="btn">
+⬅ Back to Dashboard
+</a>
+
+</div>
+
+<script>
+
+function toggleMenu(id){
+
+let menu = document.getElementById(id);
+
+if(menu.style.display === "block"){
+    menu.style.display = "none";
+}
+else{
+    menu.style.display = "block";
+}
+
+}
+
+window.onclick = function(event){
+
+if(!event.target.matches('.menu-btn')){
+
+let menus =
+document.getElementsByClassName("dropdown-menu");
+
+for(let i=0;i<menus.length;i++){
+
+menus[i].style.display = "none";
+
+}
+
+}
+
+}
+
+</script>
+<!-- DELETE MODAL -->
+
+<div id="deleteModal" class="custom-delete-modal">
+
+    <div class="delete-box">
+
+        <h2>🗑 Delete File</h2>
+
+        <p>
+            Are you sure you want to delete this file?
+        </p>
+
+        <div class="delete-actions">
+
+            <button onclick="closeDeleteModal()" class="cancel-btn">
+                Cancel
+            </button>
+
+            <a id="deleteLink" href="#" class="delete-btn">
+                Delete
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+function openDeleteModal(filename){
+
+    document.getElementById("deleteModal").style.display = "flex";
+
+    document.getElementById("deleteLink").href =
+    "/delete_download/" + filename;
+
+}
+
+function closeDeleteModal(){
+
+    document.getElementById("deleteModal").style.display = "none";
+
+}
+
+</script>
+</body>
+
+</html>

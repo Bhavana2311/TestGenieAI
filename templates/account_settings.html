@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Account Settings</title>
+
+<link rel="stylesheet"
+href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body>
+
+<div class="card">
+
+<h2>⚙ Account Settings</h2>
+
+<br>
+
+<p><b>Name</b></p>
+
+<input type="text"
+value="{{ user.name }}"
+readonly>
+
+<p><b>Email</b></p>
+
+<input type="text"
+value="{{ user.email }}"
+readonly>
+
+<p><b>Password</b></p>
+
+<input type="password"
+value="{{ user.password }}"
+readonly>
+
+<p><b>Age</b></p>
+
+<input type="text"
+value="{{ user.age }}"
+readonly>
+
+<p><b>Gender</b></p>
+
+<input type="text"
+value="{{ user.gender }}"
+readonly>
+
+<p><b>Phone</b></p>
+
+<input type="text"
+value="{{ user.phone }}"
+readonly>
+
+<br>
+
+<a href="/dashboard" class="btn">
+⬅ Back
+</a>
+
+</div>
+
+</body>
+
+</html>

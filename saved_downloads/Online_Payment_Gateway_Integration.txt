@@ -1,0 +1,77 @@
+This document outlines software testing test cases for an Online Payment Gateway Integration, covering Functional, Negative, and Edge scenarios.
+
+**Assumptions:**
+*   The payment gateway is already integrated with the e-commerce/merchant platform.
+*   Standard payment methods (Credit/Debit Cards, Net Banking, UPI/Wallets) are supported.
+*   PCI DSS compliance is handled at the gateway level, but data transmission security is part of the integration.
+*   Merchant admin panel exists for managing orders and payments.
+
+---
+
+### 1. Functional Test Cases
+
+These test cases verify that the payment gateway integration works as expected under normal, valid conditions.
+
+| Test Case ID | Scenario | Expected Result |
+| :----------- | :------- | :-------------- |
+| FUN-001      | User selects Credit Card (Visa), enters valid details, and completes payment successfully. | Order status updates to "Paid" or "Processing" on the merchant site. User receives payment confirmation. Transaction reflects in PG and merchant admin. |
+| FUN-002      | User selects Credit Card (MasterCard), enters valid details, and completes payment successfully with 3D Secure/OTP verification. | Order status updates to "Paid" or "Processing". User receives payment confirmation. Transaction reflects in PG and merchant admin. |
+| FUN-003      | User selects Debit Card, enters valid details, and completes payment successfully. | Order status updates to "Paid" or "Processing". User receives payment confirmation. Transaction reflects in PG and merchant admin. |
+| FUN-004      | User selects Net Banking, chooses a bank, authenticates, and completes payment successfully. | Order status updates to "Paid" or "Processing". User receives payment confirmation. Transaction reflects in PG and merchant admin. |
+| FUN-005      | User selects UPI, enters valid VPA/scans QR, and completes payment successfully. | Order status updates to "Paid" or "Processing". User receives payment confirmation. Transaction reflects in PG and merchant admin. |
+| FUN-006      | User selects a Wallet (e.g., PayPal, Paytm), logs in, and completes payment successfully. | Order status updates to "Paid" or "Processing". User receives payment confirmation. Transaction reflects in PG and merchant admin. |
+| FUN-007      | After successful payment, the user is redirected back to the merchant's success/order confirmation page. | User lands on the specified success page, showing order details and confirmation message. |
+| FUN-008      | Merchant initiates a full refund for a successfully paid order via the admin panel. | Order status updates to "Refunded". User receives refund notification. Refund reflects in PG and merchant admin. Money is credited back to the customer's original payment method. |
+| FUN-009      | Merchant initiates a partial refund for a successfully paid order via the admin panel. | Order status updates to "Partially Refunded". User receives refund notification for the partial amount. Refund reflects in PG and merchant admin. Partial money is credited back. |
+| FUN-010      | User applies a valid discount code, reducing the total amount, and then successfully pays the reduced amount. | Payment processes for the discounted amount. Order confirmation reflects the discount. |
+| FUN-011      | Verify that the currency displayed on the payment gateway matches the selected currency on the merchant site (if multi-currency is supported). | The payment amount and currency displayed on the PG match the merchant site's checkout. |
+| FUN-012      | Payment page elements (card number, expiry, CVV, etc.) are correctly rendered and accessible across different browsers (Chrome, Firefox, Safari, Edge). | All payment fields are visible, functional, and correctly formatted across browsers. |
+| FUN-013      | Payment page elements are responsive and functional on various mobile devices (iOS, Android) and screen sizes. | Payment interface adjusts correctly to different screen sizes, remains functional and user-friendly. |
+| FUN-014      | User's session timeout on the merchant site during payment (before submitting to PG). | User is redirected to a login page or checkout page with an appropriate error/session expired message. Cart items should ideally be retained. |
+
+---
+
+### 2. Negative Test Cases
+
+These test cases ensure the system handles invalid data, errors, and unexpected user actions gracefully.
+
+| Test Case ID | Scenario | Expected Result |
+| :----------- | :------- | :-------------- |
+| NEG-001      | User enters an invalid Credit Card number (e.g., too short/long, invalid format, non-existent). | Payment gateway declines the transaction with an appropriate error message (e.g., "Invalid card number"). |
+| NEG-002      | User enters an expired Credit/Debit Card number. | Payment gateway declines the transaction with an appropriate error message (e.g., "Card expired"). |
+| NEG-003      | User enters an incorrect CVV/CVC for a Credit/Debit Card. | Payment gateway declines the transaction with an appropriate error message (e.g., "Invalid CVV"). |
+| NEG-004      | User attempts to pay with insufficient funds in their bank account/card. | Payment gateway declines the transaction with a message like "Insufficient funds" or "Transaction declined by bank." |
+| NEG-005      | User attempts to pay with a credit card that is reported lost/stolen or blocked. | Payment gateway declines the transaction with an appropriate error message (e.g., "Card reported lost/stolen," "Transaction declined"). |
+| NEG-006      | User cancels the transaction on the payment gateway's page (before final submission). | User is redirected back to the merchant's checkout page or a cancellation page with an "Order cancelled" or "Payment failed" message. Order status remains "Pending" or "Cancelled." |
+| NEG-007      | User closes the browser window/tab during the payment process on the gateway page. | The transaction should either time out on the gateway side, or eventually be marked as "Failed" or "Cancelled." Merchant's order status remains "Pending" or eventually "Cancelled." |
+| NEG-008      | User navigates back using the browser's back button during the payment process. | User should be returned to the previous step (e.g., checkout page). The transaction should not be processed. |
+| NEG-009      | User enters incorrect OTP/3D Secure code during the verification step. | Payment gateway declines the transaction with an appropriate error message (e.g., "Incorrect OTP," "Authentication failed"). |
+| NEG-010      | User fails to complete 3D Secure/OTP verification within the given timeout period. | Payment gateway declines the transaction with a timeout error message. |
+| NEG-011      | The payment gateway becomes temporarily unavailable or returns an error during transaction processing. | The merchant site displays a generic "Payment failed" or "Gateway error" message, prompting the user to retry or try another method. Order status remains "Pending" or "Failed." |
+| NEG-012      | Merchant attempts to refund an order that was never paid (e.g., cancelled order, failed payment). | Refund request is rejected with an appropriate error message ("Order not eligible for refund," "No valid transaction found"). |
+| NEG-013      | Merchant attempts to refund an amount greater than the original transaction amount. | Refund request is rejected with an error message ("Refund amount exceeds original transaction amount"). |
+| NEG-014      | User attempts to submit payment with empty mandatory fields (e.g., card number, expiry, CVV). | Validation errors should be displayed on the payment form, preventing submission until all fields are correctly filled. |
+| NEG-015      | Attempt to pay using an unsupported payment method (e.g., a card type not configured with the gateway). | The payment method should either not be displayed as an option, or result in a clear "Unsupported payment method" error upon selection/submission. |
+
+---
+
+### 3. Edge Cases
+
+These test cases focus on boundary conditions, rare scenarios, or extreme data inputs.
+
+| Test Case ID | Scenario | Expected Result |
+| :----------- | :------- | :-------------- |
+| EDG-001      | Payment for the minimum allowed transaction amount (e.g., $0.01 or lowest configurable amount). | Payment processes successfully. |
+| EDG-002      | Payment for the maximum allowed transaction amount (e.g., $10,000 or highest configurable amount). | Payment processes successfully, assuming bank limits are not exceeded. |
+| EDG-003      | Concurrent payments from multiple users at the same time for different orders. | All payments are processed independently and successfully without conflicts. |
+| EDG-004      | Same user attempts to make multiple payments rapidly for different orders/items. | Each payment is processed as a separate transaction successfully. |
+| EDG-005      | User attempts to pay for an order that has just expired or been cancelled on the merchant side (e.g., due to stock unavailability). | Payment should be declined by the merchant system with a message indicating the order is no longer valid, or the payment gateway should return an error if the order ID is invalid. |
+| EDG-006      | Network latency causes significant delays in communication between merchant and PG, or PG and bank. | The system should handle timeouts gracefully, potentially marking the order as "Pending" and requiring manual reconciliation, or failing the transaction clearly. |
+| EDG-007      | Payment with special characters in the cardholder name (if allowed by PG). | Payment processes successfully, handling special characters correctly. |
+| EDG-008      | User enters an invalid/unsupported character in a numerical-only field (e.g., 'a' in card number). | Input validation should prevent entering non-numeric characters where only numbers are allowed. |
+| EDG-009      | User attempts to pay for an order which already has a successful payment recorded. | The system should prevent duplicate payments for the same order ID, or mark the subsequent payment as a duplicate/error. |
+| EDG-010      | A payment transaction shows as "Success" on the PG side but "Failed/Pending" on the merchant side (and vice-versa). | The integration should have reconciliation mechanisms (e.g., webhooks, callbacks, manual sync) to resolve such discrepancies. Admin should be able to manually update order status based on PG record. |
+| EDG-011      | User performs a payment using a non-standard browser or operating system (e.g., Linux, older browser versions). | The payment process should ideally be compatible or degrade gracefully with an informative message. |
+| EDG-012      | Initiating a refund for a payment that was made a very long time ago (e.g., 6 months, 1 year, beyond typical refund periods). | The refund should either process successfully (if within PG's configurable limit) or be rejected with a specific error message stating the refund window has passed. |
+| EDG-013      | User abandons the cart, logs out, and then tries to complete payment for the same cart/order via a direct link. | The system should validate the session and cart validity. Payment should either proceed if the order is still valid, or fail with an appropriate "Order not found/expired" message. |
+| EDG-014      | User pays with a bank/card from a country not explicitly supported by the payment gateway (if applicable). | Payment should be declined with an explicit "Unsupported country/region" error message. |

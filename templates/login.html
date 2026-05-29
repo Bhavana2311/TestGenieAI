@@ -10,7 +10,28 @@ href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 
 <body>
+    <div class="background-glow"></div>
 
+{% if error %}
+
+<div class="custom-popup" id="popup">
+
+<div class="popup-box">
+
+<h2>⚠ Login Failed</h2>
+
+<p>{{ error }}</p>
+
+<button onclick="closePopup()">
+OK
+</button>
+
+</div>
+
+</div>
+
+{% endif %}
+<div class="background-glow"></div>
 <div class="card">
 
 <div class="form-icon">🔐</div>
@@ -62,5 +83,16 @@ Register
 AI Powered Software Testing Platform
 
 </div>
+<script>
+
+function closePopup(){
+
+document.getElementById("popup").style.display =
+"none";
+
+}
+
+</script>
+
 </body>
 </html>

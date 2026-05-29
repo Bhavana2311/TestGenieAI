@@ -11,6 +11,7 @@ href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 
 <body>
+    <div class="background-glow"></div>
 
 <nav class="navbar">
 
@@ -52,13 +53,10 @@ and Edge Cases instantly.
 
 <br>
 
-<a href="/generator" class="btn">
-Start Generating
+<a href="/generator" class="demo-btn">
+🚀 TRY DEMO
 </a>
 
-<a href="/generator" class="btn">
-Try Demo
-</a>
     </div>
 
 </section>
@@ -93,131 +91,70 @@ Try Demo
 
 <section class="features">
 
-<div class="feature-card">
-
+<div class="feature-card"
+onclick="showPopup(
+'⚡ AI Powered',
+'TestGenie AI uses Google Gemini AI to automatically understand software requirements and generate intelligent test cases within seconds.'
+)">
 <h3>⚡ AI Powered</h3>
-
 <p>
 Generate complete test scenarios instantly.
 </p>
-
 </div>
 
-<div class="feature-card">
-
+<div class="feature-card"
+onclick="showPopup(
+'🧠 Smart Edge Cases',
+'The AI automatically predicts uncommon edge cases, invalid inputs and negative testing scenarios for better software quality.'
+)">
 <h3>🧠 Smart Edge Cases</h3>
-
 <p>
 Automatically detects uncommon testing situations.
 </p>
-
 </div>
 
-<div class="feature-card">
-
+<div class="feature-card"
+onclick="showPopup(
+'📄 PDF & TXT Export',
+'Users can instantly download generated test cases in TXT and PDF formats for documentation and QA reports.'
+)">
 <h3>📄 PDF & TXT Export</h3>
-
 <p>
 Download generated test cases instantly.
 </p>
-
 </div>
-<section class="features">
 
-<div class="feature-card">
+<div class="feature-card"
+onclick="showPopup(
+'🔒 Secure Login System',
+'Users can create accounts, login securely and manage their own generated test cases from the dashboard.'
+)">
 <h3>🔒 Secure Login System</h3>
 <p>
 User authentication and dashboard access.
 </p>
 </div>
 
-<div class="feature-card">
-<h3>📈 Productivity Boost</h3>
+<div class="feature-card"
+onclick="showPopup(
+'🚀 Future Vision',
+'Future versions of TestGenie AI will support Selenium automation, API testing, bug prediction and AI-powered QA workflows.'
+)">
+<h3>🚀 Future Vision</h3>
 <p>
-Reduce manual QA effort by 90%.
+Next generation AI testing platform.
 </p>
 </div>
 
-<div class="feature-card">
+<div class="feature-card"
+onclick="showPopup(
+'☁ Cloud Ready',
+'TestGenie AI is deployed online using Vercel and can be accessed from anywhere.'
+)">
 <h3>☁ Cloud Ready</h3>
 <p>
-Accessible anywhere using modern deployment.
+Accessible anywhere using cloud deployment.
 </p>
-</div>
-
-</section>
-<section class="features">
-
-<div class="feature-card">
-
-<h3>📌 About TestGenie AI</h3>
-
-<p>
-
-TestGenie AI is an intelligent software testing platform that helps QA engineers and developers generate high-quality test cases instantly using Generative AI.
-
-</p>
-
-</div>
-
-<div class="feature-card">
-
-<h3>🎯 Mission</h3>
-
-<p>
-
-Reduce manual testing effort and improve software quality through AI-powered automation.
-
-</p>
-
-</div>
-
-<div class="feature-card">
-
-<h3>🚀 Future Vision</h3>
-
-<p>
-
-Support Selenium automation, API testing, bug prediction and complete QA workflows.
-
-</p>
-
-</div>
-
-</section>
-
-</section>
-<section class="features">
-
-<div class="feature-card">
-
-<h3>📧 Contact</h3>
-
-<p>
-Email:
-yourmail@gmail.com
-</p>
-
-</div>
-
-<div class="feature-card">
-
-<h3>🌐 GitHub</h3>
-
-<p>
-Your GitHub Profile
-</p>
-
-</div>
-
-<div class="feature-card">
-
-<h3>💼 LinkedIn</h3>
-
-<p>
-Your LinkedIn Profile
-</p>
-
 </div>
 
 </section>
@@ -232,6 +169,41 @@ Your LinkedIn Profile
 AI Powered Software Testing Platform
 
 </div>
+<!-- CUSTOM POPUP -->
+
+<div id="popup" class="custom-popup" style="display:none;">
+
+<div class="popup-box">
+
+<h2 id="popup-title"></h2>
+
+<p id="popup-text"></p>
+
+<button onclick="closePopup()">
+Close
+</button>
+
+</div>
+
+</div>
+
+<script>
+
+function showPopup(title,text){
+
+document.getElementById("popup-title").innerHTML=title;
+
+document.getElementById("popup-text").innerHTML=text;
+
+document.getElementById("popup").style.display="flex";
+}
+
+function closePopup(){
+
+document.getElementById("popup").style.display="none";
+}
+
+</script>
 </body>
 
 </html>

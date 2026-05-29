@@ -3,7 +3,7 @@
 
 <head>
 
-<title>Dashboard</title>
+<title>Dashboard - TestGenie AI</title>
 
 <link rel="stylesheet"
 href="{{ url_for('static', filename='css/style.css') }}">
@@ -11,75 +11,232 @@ href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 
 <body>
-<nav class="navbar">
 
-<div class="logo">
-TestGenie AI
+<div class="dashboard-layout">
+
+<!-- SIDEBAR -->
+
+<div class="sidebar">
+
+<div class="profile-section">
+
+<div class="profile-image">
+👩
 </div>
 
-<div class="nav-links">
+<h2 class="username">{{ name }}</h2>
 
-<span style="color:white;">
-👋 {{ name }}
-</span>
+<p>AI Testing Engineer</p>
 
-<a href="/logout">
-Logout
+</div>
+<div class="profile-menu">
+
+<a href="/email_settings">
+📧 Email Settings
+</a>
+
+<a href="/downloads">
+📥 Downloads
+</a>
+<a href="/manage_history">
+🗑 Clear History
+</a>
+
+
+
+</form>
+
+<a href="/account_settings">
+⚙ Account Settings
+</a>
+
+<a href="/logout" class="logout-btn">
+🚪 Logout
 </a>
 
 </div>
 
-</nav>
-<div class="dashboard">
+</div>
+
+<!-- MAIN CONTENT -->
+
+<div class="dashboard-main">
+
+<div class="topbar">
 
 <h1>
-Welcome {{ name }} 🚀
+👋 Welcome {{ name }}
 </h1>
 
 <p>
-AI Powered Software Testing Platform
+Your AI Testing Workspace
+</p>
+
+</div>
+
+<div class="dashboard-actions">
+
+<a href="/generator" class="demo-btn">
+ Generate Test Cases
+</a>
+
+</div>
+
+<!-- HISTORY -->
+
+<h2 class="history-title">
+Generated Test Cases
+</h2>
+
+<div class="history-section">
+
+{% if testcases %}
+
+<div class="history-grid">
+
+{% for testcase in testcases %}
+
+<div class="history-card"
+
+data-requirement="{{ testcase.requirement }}"
+
+data-output="{{ testcase.generated_output }}"
+
+onclick="openPopup(this)">
+
+<h3>
+🧠 {{ testcase.requirement[:40] }}...
+</h3>
+
+<p>
+Click to view generated test cases
+</p>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+{% else %}
+
+<div class="empty-history">
+
+<h3>
+No Test Cases Generated Yet !
+</h3>
+
+<p>
+Start generating AI test cases to see your history here.
 </p>
 
 <br>
 
-<div class="stats">
-
-<div class="stat-card">
-<h2>⚡</h2>
-<p>Generate Test Cases</p>
-</div>
-
-<div class="stat-card">
-<h2>🧠</h2>
-<p>Smart Edge Cases</p>
-</div>
-
-<div class="stat-card">
-<h2>📄</h2>
-<p>PDF Export</p>
-</div>
-
-</div>
-
-<br><br>
-
-<div class="action-buttons">
-
 <a href="/generator" class="btn">
-Generate Test Cases
-</a>
-
-<a href="/" class="btn">
-Home
-</a>
-
-<a href="/logout" class="btn">
-Logout
+Start Generating
 </a>
 
 </div>
 
+{% endif %}
+
 </div>
+
+<!-- POPUP -->
+
+<div id="testcasePopup" class="custom-popup" style="display:none;">
+
+<div class="popup-box popup-large">
+
+<h2 id="popupRequirement"></h2>
+
+<div id="popupOutput" class="popup-output"></div>
+
+<button onclick="closePopup()">
+Close
+</button>
+
+</div>
+
+</div>
+
+<script>
+function openPopup(card){
+
+let requirement =
+card.getAttribute("data-requirement");
+
+let output =
+card.getAttribute("data-output");
+
+document.getElementById("popupRequirement").innerHTML =
+"📌 " + requirement;
+
+document.getElementById("popupOutput").textContent =
+output;
+
+document.getElementById("testcasePopup").style.display =
+"flex";
+
+}
+
+function closePopup(){
+
+document.getElementById("testcasePopup").style.display =
+"none";
+
+}
+
+function closePopup(){
+
+document.getElementById("testcasePopup").style.display =
+"none";
+
+}
+
+</script>
+
+
+</div>
+
+</div>
+
+</div>
+<script>
+
+function openModal(id){
+
+document.getElementById(id).style.display =
+"flex";
+
+}
+
+function closeModal(id){
+
+document.getElementById(id).style.display =
+"none";
+
+}
+
+window.onclick = function(event){
+
+let modals =
+document.getElementsByClassName("app-modal");
+
+for(let i=0; i<modals.length; i++){
+
+if(event.target == modals[i]){
+
+modals[i].style.display = "none";
+
+}
+
+}
+
+}
+
+</script>
 
 </body>
+
 </html>

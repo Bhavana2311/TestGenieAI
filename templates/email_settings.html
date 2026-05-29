@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Email Settings</title>
+
+<link rel="stylesheet"
+href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body>
+
+<div class="card">
+
+<h2>📧 Email Settings</h2>
+
+<form method="POST">
+
+<p>Change Email</p>
+
+<input
+type="email"
+name="email"
+value="{{ user.email }}"
+required>
+
+<button type="submit">
+Update Email
+</button>
+
+</form>
+
+<br>
+
+<a href="/dashboard" class="btn">
+⬅ Back
+</a>
+
+</div>
+
+</body>
+
+</html>

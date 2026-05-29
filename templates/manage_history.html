@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Manage History - TestGenie AI</title>
+
+<link rel="stylesheet"
+href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body>
+
+<div class="history-page">
+
+<h1 class="manage-title">
+🗑 Manage Test Case History
+</h1>
+
+<form action="/delete_selected" method="POST">
+
+<div class="manage-history-grid">
+
+{% for testcase in testcases %}
+
+<div class="manage-card">
+
+<div class="select-row">
+
+<input
+type="checkbox"
+name="selected"
+value="{{ testcase.id }}"
+class="select-checkbox">
+
+<h3>
+🧠 {{ testcase.requirement[:45] }}
+</h3>
+
+</div>
+
+<p>
+Select testcase to delete
+</p>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+<div class="manage-buttons">
+
+<button
+type="submit"
+class="delete-selected-btn">
+
+Delete Selected
+
+</button>
+
+<a
+href="/delete_all"
+class="delete-all-btn">
+
+Delete All
+
+</a>
+
+</div>
+
+</form>
+
+<br><br>
+
+<center>
+
+<a href="/dashboard" class="btn">
+⬅ Back To Dashboard
+</a>
+
+</center>
+
+</div>
+
+</body>
+
+</html>

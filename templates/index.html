@@ -44,12 +44,32 @@
 }
 
 textarea{
-    height: 220px !important;
-    resize: none;
-    border-radius: 15px !important;
-    padding: 20px !important;
-    font-size: 18px !important;
-    border: none !important;
+
+height:220px !important;
+
+resize:none;
+
+border-radius:15px !important;
+
+padding:20px !important;
+
+font-size:18px !important;
+
+border:none !important;
+
+background:
+rgba(255,255,255,.12) !important;
+
+color:white !important;
+
+backdrop-filter:blur(10px);
+
+box-shadow:
+0 0 15px rgba(0,0,0,.2);
+}
+textarea::placeholder{
+
+color:#d1d5db;
 }
 
 .btn-custom{
@@ -118,9 +138,14 @@ textarea{
 </head>
 
 <body>
+    <div class="background-glow"></div>
 
 <div class="container">
     <div class="main-box">
+        <a href="/dashboard" class="btn btn-light mb-3">
+⬅ Back to Dashboard
+</a>
+
 
         <h1 class="title">🧠 TestGenie AI</h1>
 
@@ -151,10 +176,10 @@ textarea{
         <form method="POST">
 
             <textarea id="requirementInput"
-                class="form-control mt-4"
-                name="requirement"
-                placeholder="Enter your software requirement here..."
-                required></textarea>
+class="form-control mt-4"
+name="requirement"
+placeholder="Enter your software requirement here..."
+required>{{ requirement }}</textarea>
 
             <button id="generateBtn" class="btn btn-custom w-100 mt-4">
 
@@ -187,6 +212,7 @@ textarea{
         <form action="/download" method="POST" style="display:inline;">
 
             <input type="hidden" name="output" value="{{ output }}">
+            <input type="hidden" name="requirement" value="{{ requirement }}">
 
             <button class="btn btn-success">
                 Download
@@ -237,10 +263,17 @@ function setSample(text){
 }
 function downloadPDF(){
 
-    let text = document.getElementById("outputText").innerText;
+    let text =
+    document.getElementById("outputText").innerText;
+
+    let requirement =
+    document.getElementById("requirementInput").value;
 
     window.location.href =
-    "/download_pdf?data=" + encodeURIComponent(text);
+    "/download_pdf?data=" +
+    encodeURIComponent(text) +
+    "&requirement=" +
+    encodeURIComponent(requirement);
 
 }
 

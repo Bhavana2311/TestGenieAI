@@ -1,0 +1,76 @@
+Here are software testing test cases for an E-commerce Shopping Cart and Checkout, categorized as Functional, Negative, and Edge Cases.
+
+---
+
+## E-commerce Shopping Cart and Checkout Test Cases
+
+### 1. Functional Test Cases (Happy Path)
+
+| Test Case ID | Scenario | Expected Result |
+|---|---|---|
+| **FUNC-CART-001** | **Add Single Item to Cart:** Navigate to a product page and add a single quantity of an item to the cart. | The item is added to the cart, cart icon/counter updates, and a "Product added" confirmation message appears. The subtotal in the cart reflects the item's price. |
+| **FUNC-CART-002** | **Add Multiple Quantities of Same Item:** From a product page, add 3 units of the same item to the cart. | The item is added with a quantity of 3, cart counter updates, and the subtotal reflects the price * 3. |
+| **FUNC-CART-003** | **Add Different Items to Cart:** Add Item A to cart, then add Item B (different product) to cart. | Both Item A and Item B are present in the cart, with correct quantities and individual prices. The total reflects the sum of both items. |
+| **FUNC-CART-004** | **View Shopping Cart:** Click on the "Cart" icon or button after adding items. | User is redirected to the shopping cart page, displaying all added items, quantities, individual prices, product images, and the calculated subtotal. |
+| **FUNC-CART-005** | **Update Item Quantity in Cart (Increase):** On the cart page, increase the quantity of an item from 1 to 2. | The item's quantity updates to 2, the item's total price updates (price * 2), and the overall cart subtotal is recalculated and displayed correctly. |
+| **FUNC-CART-006** | **Update Item Quantity in Cart (Decrease):** On the cart page, decrease the quantity of an item from 3 to 2. | The item's quantity updates to 2, the item's total price updates (price * 2), and the overall cart subtotal is recalculated and displayed correctly. |
+| **FUNC-CART-007** | **Remove Item from Cart:** On the cart page, click the "Remove" or "X" button next to an item. | The item is removed from the cart. The cart counter decreases, and the cart subtotal is recalculated. If it was the last item, the cart becomes empty. |
+| **FUNC-CART-008** | **Apply Valid Coupon Code:** On the cart or checkout page, enter a valid coupon code and apply it. | The coupon discount is applied to the subtotal, a "Discount Applied" message is shown, and the new, reduced total is displayed. |
+| **FUNC-CART-009** | **Continue Shopping from Cart:** Click "Continue Shopping" button on the cart page. | User is redirected to the previous product page, product listing page, or homepage. |
+| **FUNC-CART-010** | **Proceed to Checkout from Cart:** Click "Proceed to Checkout" button on the cart page with items in it. | User is redirected to the first step of the checkout process (e.g., Shipping Information or Login/Guest Checkout). |
+| **FUNC-CHECKOUT-001** | **Guest Checkout - Complete Order:** As a guest user, complete all steps of the checkout process (shipping, billing, payment with valid credit card). | Order is successfully placed, an "Order Confirmation" page is displayed with an order number, and a confirmation email is sent to the provided email address. |
+| **FUNC-CHECKOUT-002** | **Registered User Checkout - Complete Order:** As a logged-in user with saved addresses and payment methods, complete checkout using saved details. | Order is successfully placed, an "Order Confirmation" page is displayed with an order number, and a confirmation email is sent to the registered email address. |
+| **FUNC-CHECKOUT-003** | **Shipping Address Entry:** Enter valid shipping address details. | The entered shipping address is accepted, and the user can proceed to the next step. Shipping cost is calculated correctly based on address and chosen method. |
+| **FUNC-CHECKOUT-004** | **Billing Address "Same as Shipping":** Select the option for billing address to be the same as the shipping address. | The billing address fields are populated automatically or hidden, and the user can proceed. |
+| **FUNC-CHECKOUT-005** | **Different Billing Address:** Enter a separate, valid billing address from the shipping address. | The separate billing address is accepted, and the user can proceed to the next step. |
+| **FUNC-CHECKOUT-006** | **Select Shipping Method:** Choose a different shipping method (e.g., Standard vs. Express). | The shipping cost and estimated delivery date update according to the selected method. |
+| **FUNC-CHECKOUT-007** | **Credit Card Payment:** Enter valid credit card details (number, expiry, CVC, name). | The credit card details are accepted, and the user can proceed to review the order. |
+| **FUNC-CHECKOUT-008** | **Order Review Accuracy:** Verify all details on the "Order Review" page (items, quantities, prices, shipping address, billing address, shipping method, taxes, discounts, total). | All displayed information matches the selections made throughout the checkout process, and the final total is accurate. |
+| **FUNC-CHECKOUT-009** | **Order Confirmation Page:** After successful payment, land on the order confirmation page. | The page displays a unique order number, an order summary, confirmation of payment, and information about email confirmation. |
+| **FUNC-CHECKOUT-010** | **Taxes Calculation:** Add items from different tax zones/categories (if applicable) and proceed to checkout. | Taxes are correctly calculated based on the shipping address and item categories, and added to the total. |
+| **FUNC-CHECKOUT-011** | **Cart Persistence (Logged-in User):** Log in, add items, log out, then log back in. | The items previously added to the cart are still present. |
+| **FUNC-CHECKOUT-012** | **Cart Persistence (Guest User - Session Based):** Add items as a guest, close and reopen browser (within session timeout), revisit site. | The items previously added to the cart are still present (if session-based persistence is enabled). |
+
+### 2. Negative Test Cases (Error Handling)
+
+| Test Case ID | Scenario | Expected Result |
+|---|---|---|
+| **NEG-CART-001** | **Add Item Out of Stock:** Attempt to add a product that is currently marked as "Out of Stock." | An error message "Product is out of stock" is displayed, and the item is not added to the cart. The "Add to Cart" button might be disabled. |
+| **NEG-CART-002** | **Add More Than Available Stock:** Attempt to add a quantity of an item that exceeds the available stock (e.g., stock is 5, try to add 6). | An error message "Cannot add more than available stock (X)" is displayed, and the cart quantity is limited to the available stock or the item is not added. |
+| **NEG-CART-003** | **Update Quantity to Zero:** On the cart page, change an item's quantity to 0. | The item is automatically removed from the cart, and the cart subtotal is updated accordingly. |
+| **NEG-CART-004** | **Update Quantity to Negative Value:** On the cart page, attempt to enter a negative number for item quantity. | An error message "Invalid quantity" is displayed, and the quantity reverts to the previous valid number or minimum allowed (1). |
+| **NEG-CART-005** | **Apply Invalid Coupon Code:** Enter a non-existent or malformed coupon code. | An error message "Invalid coupon code" or "Coupon not found" is displayed, and no discount is applied. |
+| **NEG-CART-006** | **Apply Expired Coupon Code:** Enter a coupon code that has passed its expiration date. | An error message "Coupon has expired" is displayed, and no discount is applied. |
+| **NEG-CART-007** | **Apply Used Coupon Code:** Attempt to use a one-time-use coupon code that has already been applied by the user/session. | An error message "Coupon has already been used" or "Coupon is invalid" is displayed, and no discount is applied. |
+| **NEG-CART-008** | **Proceed to Checkout with Empty Cart:** Click "Proceed to Checkout" with an empty shopping cart. | An error message "Your cart is empty" is displayed, or the button is disabled, preventing progression to checkout. |
+| **NEG-CHECKOUT-001** | **Missing Required Shipping Field:** Leave a mandatory shipping address field (e.g., street, city, zip code) blank. | An error message "This field is required" is displayed next to the missing field, preventing progression to the next step. |
+| **NEG-CHECKOUT-002** | **Invalid Shipping Address Format:** Enter an improperly formatted shipping address (e.g., letters in a zip code field, invalid email format). | An error message indicating the invalid format is displayed, preventing progression. |
+| **NEG-CHECKOUT-003** | **Invalid Credit Card Number:** Enter a credit card number that fails basic validation (e.g., incorrect length, invalid Luhn algorithm check). | An error message "Invalid credit card number" is displayed, preventing order placement. |
+| **NEG-CHECKOUT-004** | **Expired Credit Card:** Enter a credit card number with an expiration date in the past. | An error message "Credit card has expired" is displayed, preventing order placement. |
+| **NEG-CHECKOUT-005** | **Incorrect CVC/CVV:** Enter a credit card with an incorrect CVC/CVV code. | An error message "Invalid CVC" or "Security code incorrect" is displayed, preventing order placement. |
+| **NEG-CHECKOUT-006** | **Payment Gateway Failure (Simulated):** Attempt to place an order when the payment gateway responds with a general error or decline (simulated for testing). | A message "Payment failed. Please try again or use a different payment method" is displayed. User is returned to payment step. |
+| **NEG-CHECKOUT-007** | **Shipping to Unsupported Region:** Enter a shipping address for a country or region not supported by the store. | An error message "Shipping to this region is not supported" or similar is displayed, preventing progression. |
+| **NEG-CHECKOUT-008** | **Browser Back Button After Order Confirmation:** After successfully placing an order and landing on the confirmation page, use the browser's back button. | User should not be able to resubmit the order. Should either stay on the confirmation page or be redirected to the homepage/account. |
+| **NEG-CHECKOUT-009** | **Session Timeout During Checkout:** Start checkout, let the session expire (wait a long time), then attempt to proceed. | User should be logged out (if applicable) or redirected to the login/cart page with a message "Your session has expired." Cart contents might be lost or saved. |
+| **NEG-CHECKOUT-010** | **Attempt to Apply Incompatible Coupons:** (If system supports multiple coupons) Try to apply two coupons that are mutually exclusive. | An error message "These coupons cannot be used together" is displayed. |
+
+### 3. Edge Cases
+
+| Test Case ID | Scenario | Expected Result |
+|---|---|---|
+| **EDGE-CART-001** | **Maximum Quantity of Item:** Add the absolute maximum allowed quantity of a single item to the cart (e.g., if max is 99, add 99). | The item is added, quantity updates to 99, and the subtotal is correct. The system should handle the large quantity without performance issues or display errors. |
+| **EDGE-CART-002** | **Large Number of Unique Items:** Add 50+ unique items to the cart. | All items are added and displayed correctly. The cart page loads reasonably fast, and calculations remain accurate. |
+| **EDGE-CART-003** | **Item with Zero Price:** Add a free item (price = 0) to the cart. | The item is added with a price of $0.00. It contributes $0 to the subtotal. |
+| **EDGE-CART-004** | **Item with Very High Price:** Add an item with an exceptionally high price (e.g., $99,999.99). | The item is added, price and subtotal are displayed correctly without overflow or formatting issues. |
+| **EDGE-CART-005** | **Cart with Only Free Items:** Add multiple free items to the cart. | The subtotal should correctly display $0.00. Checkout should proceed without requiring payment details if the total is genuinely zero (and no shipping cost). |
+| **EDGE-CART-006** | **Coupon Resulting in Zero/Negative Total (If not explicitly handled):** Apply a large discount coupon that would make the order total zero or negative. | The total should be adjusted to $0.00 (not negative). If free shipping is applicable, payment should be skipped. |
+| **EDGE-CHECKOUT-001** | **Order Total is Exactly $0.00:** Place an order where the total comes to zero (e.g., 100% discount, free product, free shipping). | The checkout process should bypass payment steps and confirm the order successfully, without requiring any payment information. |
+| **EDGE-CHECKOUT-002** | **Very Long Shipping/Billing Address:** Enter an address with maximum allowed characters in each field (street, city, state, etc.). | The address should be accepted, stored, and displayed correctly on all relevant pages (review, confirmation, admin). |
+| **EDGE-CHECKOUT-003** | **Very Long Customer Name:** Enter a first and last name with maximum allowed characters. | The name should be accepted and displayed correctly on all relevant pages. |
+| **EDGE-CHECKOUT-004** | **Order with Only Digital Products:** Purchase only digital goods (e.g., e-books, software downloads). | The checkout process should skip shipping information steps and only require billing and payment. |
+| **EDGE-CHECKOUT-005** | **Mixed Order (Digital + Physical):** Purchase a mix of digital and physical products. | The checkout process should correctly handle both: requiring shipping for physical items while delivering digital items via download/email. |
+| **EDGE-CHECKOUT-006** | **International Address with Unique Format:** Enter a shipping address for a country with a non-standard address format (e.g., specific postal code requirements, reversed street/house number). | The system should correctly accept and process the international address, ideally with dynamic field validation or appropriate guidance. |
+| **EDGE-CHECKOUT-007** | **Minimum Order Value:** If there's a minimum order value configured (e.g., $10), attempt to checkout with an order value below it (e.g., $5). | An error message "Minimum order value of $X required" should be displayed, preventing checkout. |
+| **EDGE-CHECKOUT-008** | **Network Interruption During Payment:** Simulate a loss of network connectivity right after submitting payment details but before receiving confirmation from the gateway. | The system should handle the interruption gracefully, potentially showing a "Payment pending" or "Error" message, and prevent duplicate charges if the payment eventually went through. |
+| **EDGE-CHECKOUT-009** | **Apply Multiple Compatible Coupons:** (If supported) Apply two different, valid coupon codes that can be stacked. | Both coupon discounts are applied cumulatively, and the final total reflects both reductions. |
+| **EDGE-CHECKOUT-010** | **Product Price Changes While in Cart:** Add an item to the cart, then an admin updates the product's price, then proceed to checkout. | The cart should display the *updated* price, or a notification should alert the user that "Prices have changed for some items." The checkout total should reflect the latest prices. |
